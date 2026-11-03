@@ -90,6 +90,38 @@ body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-
 body.vk .fa .kb.big{display:flex}body.vk .fa input,body.vk .fa .sc{display:none}
 #mix{overflow:auto}
 @media(max-height:520px){.kb:not(.big) svg{width:30px;height:30px}.kg{grid-template-columns:repeat(4,1fr)}}
+.fw{--pt:12px;--pb:12px;background:#0b1820}
+.reg{position:absolute;inset:var(--pt) 5px var(--pb) 5px;display:flex;gap:4px}
+.mt{display:flex;gap:2px;width:22px}.mt .me{position:relative;flex:1;bottom:auto;top:auto;width:auto;left:auto;background:#050b0f;border:1px solid #1f3542}
+.mt .me i{top:0;height:100%;clip-path:inset(100% 0 0 0);background:linear-gradient(0deg,#35d07f 0 68.6%,#e8b83a 68.6% 85.7%,#e5484d 85.7%)}
+.cal{position:relative;width:24px}.cal .sc{position:absolute;left:0;right:0;text-align:center;transform:translateY(50%);font-size:9px;color:#8fb0c0}
+.fa{position:relative;flex:1}
+.trk{position:absolute;left:0;right:0;top:0;bottom:0;touch-action:none;cursor:ns-resize}
+.rail{position:absolute;left:50%;top:0;bottom:0;width:6px;transform:translateX(-50%);background:#050b0f;border:1px solid #2b4352;border-radius:3px}
+.rail i{position:absolute;left:0;right:0;bottom:0;height:var(--v);background:#7f98a6;border-radius:3px}
+.thm{position:absolute;left:50%;bottom:var(--v);transform:translate(-50%,50%);width:34px;height:20px;border-radius:4px;background:linear-gradient(#eef3f6,#9aa9b3);border:1px solid #5d7686;box-shadow:0 2px 5px #000a}
+.thm::after{content:'';position:absolute;left:4px;right:4px;top:calc(50% - 1px);height:2px;background:#2a3b46}
+.zl{position:absolute;left:0;right:0;bottom:85.7%;height:1px;background:#35d07f77;pointer-events:none}
+body.vk .fa .trk{display:none}
+.st{background:#102c52;border-color:#0a1c33}
+.leds{display:flex;justify-content:space-between;margin:0 7px}
+.leds i{width:17px;height:8px;border-radius:2px;background:#2a3d57;box-shadow:inset 0 0 2px #000}
+.leds i.pk{background:#4a2020}.leds i.sg.on{background:#f6f9fb;box-shadow:0 0 6px #fff}.leds i.pk.on{background:#ff3b30;box-shadow:0 0 7px #ff3b30}
+.fw{--pt:26px;--pb:26px;background:linear-gradient(#153b70,#0f2d56);border-top:1px solid #0a1c33}
+.reg{gap:3px;inset:var(--pt) 4px var(--pb) 4px}
+.mt{order:1;width:16px;gap:1px}.fa{order:2}.cal{order:3;width:20px}
+.mt .me{background:#071426;border-color:#0a1c33}
+.mt .me::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 3px,#0a1c33 3px 4px);pointer-events:none}
+.cal .sc{left:5px;right:auto;text-align:left;color:#d4e4f8;font-size:8.5px}
+.cal .sc::before{content:'';position:absolute;left:-5px;top:50%;width:4px;height:1px;background:#8fb0d8}
+.rail{width:8px;background:#000;border:1px solid #000;border-radius:2px;box-shadow:inset 0 0 3px #000,0 0 0 1px #1d4a80}.rail i{display:none}
+.thm{width:34px;height:46px;border-radius:3px;border:1px solid #6b7a85;background:linear-gradient(#f5f5f3 0 31%,#8f969a 31% 34%,#f5f5f3 34% 65%,#8f969a 65% 68%,#f5f5f3 68%);box-shadow:0 3px 6px #000b}
+.thm::after{left:3px;right:3px;top:calc(50% - 1px);height:2px;background:#222}
+.zl{background:#6fa8e855}
+@media(max-height:520px){.fw{--pt:18px;--pb:18px}.thm{height:34px;width:30px}}
+:root{--fh:clamp(250px,calc(100vh - 500px),560px)}
+.fw{--pt:24px;--pb:24px}
+@media(max-height:520px){:root{--fh:260px}.fw{--pt:18px;--pb:18px}}
 </style>
 </head>
 <body>
@@ -137,18 +169,19 @@ const pads=[...Array(8)].map(()=>({n:'',a:null}));
 const TABS=[['mix','MIX'],['rack','FX RACK'],['flow','SIGNAL FLOW'],['snd','MY SOUNDS'],['plg','PLUGINS'],['set','SETUP'],['chk','SIGNAL CHECK']];
 /* ---------- strip ---------- */
 function build(o){const m=o.k==='m',c=m?'#a85d7d':COL[o.i],e=document.createElement('div');e.className='st'+(m?' mst':'');e.dataset.o=o.id;
- const sc=[0,-6,-12,-24,-36,-48,-60],fs=[10,0,-10,-20,-30,-40,-50];
+ const sc=[10,0,-10,-20,-30,-40,-50,-60];
  e.innerHTML=`<div class="sh" style="background:${c}" data-a="sel">${m?'MASTER':o.i+1}</div><div class="fxl"></div>
  ${m?'<div class="lv"><span class="lvl">LUFS-I —</span><span class="tpk">dBTP —</span></div>':'<div class="kg">'+kn('tr','GAIN',-18,18,0)+kn('hi','HI',-15,15,0)+kn('mi','MID',-15,15,0)+kn('lo','LO',-15,15,0)+'</div><div class="kg1">'+kn('pan','PAN',-100,100,0)+'</div><div class="r2"><button data-a="ph">Ø</button><button data-a="hp">HPF</button></div>'}
  <div class="r2"><button class="mt" data-a="mt">MUTE</button>${m?'<button class="on" style="cursor:default">STEREO</button>':'<button class="so" data-a="so">SOLO</button>'}</div>
  <div class="db">0.0 dB</div>
- <div class="fw"><div class="mw"><div class="me a"><i></i></div><div class="me b"><i></i></div>${sc.map(d=>`<span class="sc l" style="bottom:calc(8px + (100% - 14px) * ${(d+60)/60})">${d}</span>`).join('')}</div><div class="fa">${kn('vol','VOL',0,100,UN,' big')}<input type="range" class="fd" min="0" max="100" step=".1" value="${UN}" data-a="fd">${fs.map(d=>`<span class="sc r" style="bottom:calc(14px + (var(--fh) - 52px) * ${(d+60)/70})">${d>0?'+'+d:d}</span>`).join('')}</div></div>
+ <div class="leds"><i class="sg" title="Sinyal"></i><i class="pk" title="Peak"></i></div>
+ <div class="fw"><div class="reg"><div class="mt"><div class="me"><i></i></div><div class="me"><i></i></div></div><div class="cal">${sc.map(d=>`<span class="sc" style="bottom:${(d+60)/70*100}%">${d>0?'+'+d:d===-60?'-∞':d}</span>`).join('')}</div><div class="fa">${kn('vol','VOL',0,100,UN,' big')}<div class="trk" style="--v:${UN}%"><div class="rail"><i></i></div><div class="thm" tabindex="0" role="slider" aria-label="Fader" aria-valuemin="0" aria-valuemax="100"></div></div></div><div class="zl"></div></div></div>
  <div class="bt" style="background:${c}" data-a="ren"><span class="nm">${m?'MASTER':o.name}</span><span>${m?'':IC[o.i]}</span></div>`;
  o.el=e;$('#mix').appendChild(e)}
 function renderFx(o){const l=$('.fxl',o.el);let h='';for(let k=0;k<5;k++){const f=o.fx[k];
   h+=f?`<div class="sl ${f.on?'':'off'}"><span class="fn" data-a="op" data-k="${k}" title="${FXD[f.t].n}">${FXD[f.t].n}</span><button class="pw ${f.on?'on':''}" data-a="pw" data-k="${k}">⏻</button></div>`:`<button class="ad" data-a="add">+ ADD FX</button>`}
  l.innerHTML=h}
-function sync(o){const e=o.el,ch=o.k==='c';$('.fd',e).value=o.v;setKn(e,'vol',o.v);$('.db',e).textContent=fmt(o.v);$('.mt',e).classList.toggle('on',o.mute);e.classList.toggle('sel',sel===(ch?o.i:-1)&&tab!=='x');
+function sync(o){const e=o.el,ch=o.k==='c';setFd(e,o.v);setKn(e,'vol',o.v);$('.db',e).textContent=fmt(o.v);$('.mt',e).classList.toggle('on',o.mute);e.classList.toggle('sel',sel===(ch?o.i:-1)&&tab!=='x');
  if(ch){$('.so',e).classList.toggle('on',o.solo);$$('[data-a=ph]',e)[0].classList.toggle('on',o.ph);$$('[data-a=hp]',e)[0].classList.toggle('on',o.hpf);setKn(e,'tr',o.tr);setKn(e,'hi',o.eq[2]);setKn(e,'mi',o.eq[1]);setKn(e,'lo',o.eq[0]);setKn(e,'pan',Math.round(o.pan*100));$('.nm',e).textContent=o.name}}
 /* ---------- audio ---------- */
 function stAn(n){const s=ctx.createChannelSplitter(2),a=[ctx.createAnalyser(),ctx.createAnalyser()];a.forEach(x=>x.fftSize=512);n.connect(s);s.connect(a[0],0);s.connect(a[1],1);return a}
@@ -189,7 +222,7 @@ function addFx(o,t,st){const f=st?{t:st.t,on:st.on,p:{...st.p}}:mkfx(t);o.fx.pus
 function setFx(o,list){o.fx.forEach(killFx);o.fx=[];list.forEach(f=>addFx(o,f.t,f));rewire(o)}
 const buf=new Float32Array(512),kb=new Float32Array(2048);
 function loop(){const now=performance.now();
- [...chs,M].forEach(o=>{if(!o.an)return;let pk=0;o.an.forEach((a,k)=>{a.getFloatTimeDomainData(buf);let p=0;for(let i=0;i<512;i++){const x=Math.abs(buf[i]);if(x>p)p=x}pk=Math.max(pk,p);o.h[k]=Math.max(p>0?Math.max(0,Math.min(100,(20*Math.log10(p)+60)/60*100)):0,o.h[k]-2);if(tab==='mix')$$('.me i',o.el)[k].style.height=o.h[k]+'%'});o.pk=pk;if(pk>=.99)o.ct=now;
+ [...chs,M].forEach(o=>{if(!o.an)return;let pk=0;o.an.forEach((a,k)=>{a.getFloatTimeDomainData(buf);let p=0;for(let i=0;i<512;i++){const x=Math.abs(buf[i]);if(x>p)p=x}pk=Math.max(pk,p);o.h[k]=Math.max(p>0?Math.max(0,Math.min(100,(20*Math.log10(p)+60)/70*100)):0,o.h[k]-2);if(tab==='mix')$$('.me i',o.el)[k].style.clipPath='inset('+(100-o.h[k])+'% 0 0 0)'});o.pk=pk;if(pk>=.99)o.ct=now;if(tab==='mix'){o.ld=o.ld||$$('.leds i',o.el);if(o.ld.length){o.ld[0].classList.toggle('on',pk>.003);o.ld[1].classList.toggle('on',pk>.7||(!!o.ct&&now-o.ct<1200))}}
   if(o.k==='m'&&pk>0){tp=Math.max(tp,20*Math.log10(pk))}});
  chs.forEach(c=>c.fx.forEach(f=>{if(f.t==='gate'&&f.n&&f.on){f.n.an.getFloatTimeDomainData(buf);let s=0;for(let i=0;i<512;i++)s+=buf[i]*buf[i];const d=10*Math.log10(s/512+1e-12);f.n.g.gain.setTargetAtTime(d>f.p.th?1:Math.pow(10,f.p.rg/20),ctx.currentTime,.03)}else if(f.t==='gate'&&f.n)f.n.g.gain.value=1}));
  kan.getFloatTimeDomainData(kb);let s=0;for(let i=0;i<2048;i++)s+=kb[i]*kb[i];s/=2048;if(s>1e-7){lsum+=s;ln++}
@@ -282,7 +315,15 @@ function kn(key,lb,mn,mx,def,cls=''){const z=cls.includes('big')?64:36;return `<
 function paint(k,v){const mn=+k.dataset.min,mx=+k.dataset.max;k.dataset.v=v;$('.ind',k).setAttribute('transform','rotate('+(-135+(v-mn)/(mx-mn)*270)+' 20 20)');$('.kv',k).textContent=kdisp(k.dataset.key,v)}
 function setKn(e,key,v){const k=$('.kb[data-key="'+key+'"]',e);if(k)paint(k,v)}
 function knSet(k,v,u){const key=k.dataset.key;v=key==='vol'?Math.round(v*10)/10:key==='pan'?Math.round(v):Math.round(v*2)/2;paint(k,v);if(!u)return;const o=getO(k.closest('[data-o]').dataset.o);
- if(key==='tr')o.tr=v;else if(key==='hi')o.eq[2]=v;else if(key==='mi')o.eq[1]=v;else if(key==='lo')o.eq[0]=v;else if(key==='pan')o.pan=v/100;else if(key==='vol'){o.v=v;$('.fd',o.el).value=v;$('.db',o.el).textContent=fmt(v)}apply()}
+ if(key==='tr')o.tr=v;else if(key==='hi')o.eq[2]=v;else if(key==='mi')o.eq[1]=v;else if(key==='lo')o.eq[0]=v;else if(key==='pan')o.pan=v/100;else if(key==='vol'){o.v=v;setFd(o.el,v);$('.db',o.el).textContent=fmt(v)}apply()}
+function setFd(e,v){const t=$('.trk',e);if(t)t.style.setProperty('--v',v+'%')}
+function fdSet(t,v){const o=getO(t.closest('[data-o]').dataset.o);o.v=v;setFd(o.el,v);$('.db',o.el).textContent=fmt(v);setKn(o.el,'vol',v);apply()}
+let fdr=null,fdo=0;
+document.addEventListener('pointerdown',e=>{const t=e.target.closest('.trk');if(!t)return;ensure();e.preventDefault();try{t.setPointerCapture(e.pointerId)}catch(x){}fdr=t;const h=e.target.closest('.thm');if(h){const r=h.getBoundingClientRect();fdo=e.clientY-(r.top+r.height/2)}else{fdo=0;fdMove(e)}h&&h.focus()});
+function fdMove(e){const r=fdr.getBoundingClientRect();let v=Math.max(0,Math.min(100,(r.bottom-(e.clientY-fdo))/r.height*100));if(Math.abs(v-UN)<1.5)v=UN;fdSet(fdr,Math.round(v*10)/10)}
+document.addEventListener('pointermove',e=>{if(fdr)fdMove(e)});document.addEventListener('pointerup',()=>fdr=null);document.addEventListener('pointercancel',()=>fdr=null);
+document.addEventListener('dblclick',e=>{const t=e.target.closest('.trk');if(t)fdSet(t,UN)});
+document.addEventListener('keydown',e=>{const h=e.target.closest&&e.target.closest('.thm');if(!h||!['ArrowUp','ArrowDown'].includes(e.key))return;e.preventDefault();const t=h.closest('.trk'),o=getO(t.closest('[data-o]').dataset.o);fdSet(t,Math.max(0,Math.min(100,o.v+(e.key==='ArrowUp'?1:-1)*(e.shiftKey?5:1))))});
 let kd=null;
 document.addEventListener('pointerdown',e=>{const k=e.target.closest('.kb');if(!k)return;ensure();e.preventDefault();try{k.setPointerCapture(e.pointerId)}catch(x){}kd={k,y:e.clientY,v:+k.dataset.v}});
 document.addEventListener('pointermove',e=>{if(!kd)return;const k=kd.k,mn=+k.dataset.min,mx=+k.dataset.max;knSet(k,Math.max(mn,Math.min(mx,kd.v+(kd.y-e.clientY)/150*(mx-mn))),true)});
