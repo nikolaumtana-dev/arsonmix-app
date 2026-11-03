@@ -21,7 +21,7 @@ Setelah terbuka sekali dengan internet, aplikasi bisa dipakai offline.
 5. Sambungkan HP ke charger. Layar dijaga tetap menyala selama dipakai.
 
 ## Memperbarui versi
-Ganti index.html di repositori, lalu ubah `V='arsonmix-v1'` di sw.js menjadi `arsonmix-v2` agar HP memuat versi baru.
+Ganti index.html di repositori, lalu ubah angka versi di sw.js (V='arsonmix-v2' menjadi v3, dst) agar HP memuat versi baru.
 
 ## Catatan
 - Di layar HP yang pendek, baris FX di strip disembunyikan; atur FX lewat tab FX RACK.
